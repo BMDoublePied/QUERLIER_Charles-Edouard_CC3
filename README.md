@@ -69,6 +69,7 @@ Enfin, exécuter la commande `node server-http.mjs` et vérifier que votre appli
 
 **Question 1.1** donner la liste des en-têtes de la réponse HTTP du serveur.
 
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.1%201.png?raw=true)
 ### Servir différents types de contenus
 
 Maintenant, remplacer la fonction `requestListener()` par la suivante et tester :
