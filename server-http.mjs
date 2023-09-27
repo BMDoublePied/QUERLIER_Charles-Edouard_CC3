@@ -14,11 +14,14 @@ async function requestListener(_request, response) {
   } catch (error) {
     console.error(error);
     response.writeHead(500);
-    response.end("Erreur interne du serveur (code d'erreur : 500) : fichier introuvable");
+    response.end(
+      "Erreur interne du serveur (code d'erreur : 500) : fichier introuvable",
+    );
   }
 }
 
 const server = http.createServer(requestListener);
 server.listen(port, host, () => {
+  console.log("NODE_ENV =", process.env.NODE_ENV);
   console.log(`Server is running on http://${host}:${port}`);
 });
