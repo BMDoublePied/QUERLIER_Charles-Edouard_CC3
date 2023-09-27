@@ -8,18 +8,28 @@ import fs from "node:fs/promises";
 async function requestListener(request, response) {
   response.setHeader("Content-Type", "text/html");
   try {
-    const contents = await fs.readFile("index.html", "utf8");
-    switch (request.url) {
-      case "/index.html":
-        response.writeHead(200);
-        return response.end(contents);
-      case "/random.html":
-        response.writeHead(200);
-        return response.end(`<html><p>${Math.floor(100 * Math.random())}</p></html>`);
-      default:
-        response.writeHead(404);
-        return response.end(`<html><p>404: NOT FOUND</p></html>`);
+    let urlSegments = request.url.split("/");
+
+    if (urlSegments[1] === "index.html" || urlSegments[1] === "") {
+      const contents = await fs.readFile("index.html", "utf8");
+      response.writeHead(200);
+      return response.end(contents);
     }
+
+    if (urlSegments[1] === "random" && urlSegments.length === 3) {
+      const nb = parseInt(urlSegments[2]);
+      if (!isNaN(nb)) {
+        const randomNumbers = [];
+        for (let i = 0; i < nb; i++) {
+          randomNumbers.push(Math.floor(100 * Math.random()));
+        }
+        response.writeHead(200);
+        return response.end(`<html><p>${randomNumbers.join(", ")}</p></html>`);
+      }
+    }
+
+    response.writeHead(404);
+    return response.end(`<html><p>404: NOT FOUND</p></html>`);
   } catch (error) {
     console.error(error);
     response.writeHead(500);
