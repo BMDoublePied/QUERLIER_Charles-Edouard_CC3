@@ -77,7 +77,7 @@ La deuxième ligne indique la date et l'heure de génération de la réponse
 La troisième ligne spécifie que la connexion entre le client et le serveur doit être maintenue ouverte pour d'autres requêtes.
 La quatrième ligne définit un délai de 5 secondes pour la durée pendant laquelle la connexion doit rester ouverte s'il n'y a pas d'autres requêtes.
 La dernière ligne indique que la réponse est encodée sur plusieurs parties.
-
+<br><br><br>
 
 ### Servir différents types de contenus
 
@@ -92,12 +92,12 @@ function requestListener(_request, response) {
 
 **Question 1.2** donner la liste des en-têtes qui ont changé depuis la version précédente.
 
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.2%201.png?raw=true)
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.2%202.png?raw=true)
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.2%201.png?raw=true)
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.2%202.png?raw=true)
 
 La ligne « Transfer-Encoding » est enlevée, et il y a deux nouvelles lignes :
 « Content-Type: application/json » qui spécifie le type de contenu de la réponse, qui est JSON dans ce cas, et « Content-Length: 20 »  qui indique la longueur du corps de la réponse en octets. Dans ce cas, le corps de la réponse a une longueur de 20 octets.
-
+<br><br><br>
 
 Remplacer enfin la fonction `requestListener()` par la suivante et tester :
 
@@ -117,13 +117,12 @@ function requestListener(_request, response) {
 
 **Question 1.3** que contient la réponse reçue par le client ?
 
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.3.png?raw=true)
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.3.png?raw=true)
 
 Si le fichier html est bien renseigné avec le nom correspondant (Dans ce cas, index.html), le contenu html va bien charger. Si ce n’est pas le cas, la requête n’aboutira pas.
-
+<br><br><br>
 
 **Question 1.4** quelle est l'erreur affichée dans la console ? Retrouver sur <https://nodejs.org/api> le code d'erreur affiché.
-
 
 [Error: ENOENT: no such file or directory, open 'D:\Travail\cours\L2 S4\Développement web\TP\TP5\base\index.html'] {
   errno: -4058,
@@ -138,8 +137,9 @@ Si le fichier html est bien renseigné avec le nom correspondant (Dans ce cas, i
 Il ne trouve pas le fichier spécifié dans « readFile » dans la fonction requestListener()
 
 En ajoutant la gestion d’erreur en utilisant un « catch(error) » dans la fonction requestListener() lorsque cela se produit, nous pouvons avoir le message suivant s’affichant sur la page pour l’utilisateur :
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.4.png?raw=true)
 
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.4.png?raw=true)
+<br><br><br>
 
 Modifier la fonction `requestListener()` précédente pour que le client recoive une erreur 500 si `index.html` est introuvable en remplacant le callback de la méthode `Promise.catch()`.
 
@@ -163,7 +163,7 @@ async function requestListener(_request, response) {
 }
 
 Cette version permet d’avoir un code plus lisible, de mieux gérer les erreurs avec try/catch et nous permettra d’utiliser d’autres opérations asynchrones plus facilement.
-
+<br><br><br>
 
 **Commit/push** dans votre dépot Git.
 
@@ -176,20 +176,25 @@ Dans le dossier `devweb-tp5` exécuter les commandes suivantes :
 
 **Question 1.6** indiquer ce que cette commande a modifié dans votre projet.
 
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%201.png?raw=true)
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%201.png?raw=true)
+
 Ces commandes permettent d’installer différents packages.
 Cross-env permet de définir et d'utiliser des variables d'environnement de manière indépendante de Windows.
 Nodemon quant à lui permet de redémarrer le serveur lorsque des changements sont détectés en scannant les fichiers, ce qui fluidifie grandement le développement.
 Le fichier package.json a été modifié en ajoutant cross-env en tant que dépendance de production, et en ajoutant Nodemon en tant que dépendance de développement.
 
 package.json avant l’installation de ces packages :
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%202.png?raw=true)
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%202.png?raw=true)
 
 package.json après installation de ces packages :
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%203.png?raw=true)
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%203.png?raw=true)
 
 De nombreux fichiers ont également été ajoutés correspondant aux éléments nécessaires au bon fonctionnement de ces packages :
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%204.png?raw=true)
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%204.png?raw=true)
+<br><br><br>
 
 Ensuite, remplacer la propriété `"scripts"` du fichier `package.json` par la suivante :
 
@@ -214,7 +219,7 @@ Définit NODE_ENV comme "development" : Le script définit la variable d'environ
 http-prod :
 Utilise node : Le script http-prod utilise simplement node pour exécuter le fichier server-http.mjs. Contrairement à nodemon, il n'y a pas de surveillance de fichiers ni de redémarrage automatique en cas de modification du code source.
 Définit NODE_ENV comme "production" : Le script définit la variable d'environnement NODE_ENV sur "production". Cela peut être utilisé pour configurer l’application de manière spécifique à la production, par exemple, pour désactiver le mode de débogage ou pour activer certaines optimisations.
-
+<br><br><br>
 
 Les fichiers [`.eslintrc.json`](.eslintrc.json) et [`.prettierrc`](.prettierrc) sont fournis dans le dossier `devweb-tp5`. Exécuter la commande suivante pour installe les dépendances :
 
@@ -267,34 +272,40 @@ Tester les **routes** suivantes :
 **Question 1.8** donner les codes HTTP reçus par votre navigateur pour chacune des quatre pages précédentes.
 
 •	http://localhost:8000/index.html
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%201.png?raw=true)
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%201.png?raw=true)
+
 Affiche le contenu du fichier index.html lorsqu’on ajoute « index.html » dans l’url.
 case "/index.html":
         response.writeHead(200);
         return response.end(contents);
 
 •	http://localhost:8000/random.html
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%202.png?raw=true)
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%202.png?raw=true)
+
 Affiche un nombre aléatoire selon le contenu indiqué dans requestListener lorsqu’on ajoute « random.html » dans l’url.
 case "/random.html":
         response.writeHead(200);
         return response.end(`<html><p>${Math.floor(100 * Math.random())}</p></html>`);
 
 •	http://localhost:8000/
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%203.png?raw=true)
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%203.png?raw=true)
+
 Lorsque rien n’est renseigné dans l’url, il affiche un code d’erreur 404, il ne trouve rien, comme indiqué dans requestListener :
 default:
         response.writeHead(404);
         return response.end(`<html><p>404: NOT FOUND</p></html>`);
 
 •	http://localhost:8000/dont-exist
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%204.png?raw=true)
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%204.png?raw=true)
+
 Lorsque le contenu renseigné est introuvable, il renvoie une erreur 404. L’erreur est affiché pour l’utilisateur.
-![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%205.png?raw=true)
 
-
-
-__________________________
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8.5.png?raw=true)
+<br><br><br>
 
 Maintenant, on veut ajouter une route `/random/:nb` où `:nb` est un paramètre entier avec le nombre d'entiers à générer. Ajouter cette route au `switch` et reprendre la page `random.html` pour générer autant de nombres qu'indiqué dans l'URL.
 
@@ -316,6 +327,15 @@ npm install --save express http-errors loglevel morgan
 ```
 
 **Question 2.1** donner les URL des documentations de chacun des modules installés par la commande précédente.
+
+https://expressjs.com
+
+https://www.npmjs.com/package/http-errors
+
+https://www.npmjs.com/package/loglevel
+
+https://expressjs.com/en/resources/middleware/morgan.html
+<br><br><br>
 
 Ensuite, sur le modèle des scripts `http-prod` et `http-dev` du fichier `package.json`, créer les scripts `express-prod` et `express-dev`.
 
@@ -347,7 +367,37 @@ app.listen(port, host);
 
 **Question 2.2** vérifier que les trois routes fonctionnent.
 
+http://localhost:8000 :
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/2.2%201.png?raw=true)
+
+http://localhost:8000/random/10 :
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/2.2%202.png?raw=true)
+
+http://localhost:8000/index.html :
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/2.2%203.png?raw=true)
+
+Les 3 routes fonctionnent comme prévu.
+<br><br><br>
+
 **Question 2.3** lister les en-têtes des réponses fournies par Express. Lesquelles sont nouvelles par rapport au serveur HTTP ?
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/2.3.png?raw=true)
+
+Les en-têtes suivants sont nouveaux par rapport au serveur HTTP :
+
+•	Accept-Ranges
+
+•	Cache-Control
+
+•	Etag
+
+•	Last-Modified
+
+•	X-Powered-By
+<br><br><br>
 
 Remplacer la dernière ligne de `server-express.mjs` par les suivantes
 
@@ -365,6 +415,9 @@ console.info(`File ${import.meta.url} executed.`);
 
 **Question 2.4** quand l'événement `listening` est-il déclenché ?
 
+L'événement "listening" est déclenché lorsque le serveur Express est entièrement opérationnel et prêt à gérer les requêtes HTTP entrantes.
+<br><br><br>
+
 **Commit/push** dans votre dépot Git.
 
 ### Ajout de middlewares
@@ -379,7 +432,25 @@ Ce n'est pas très performant, d'autant plus qu'un _middleware_ Epxress [existe 
 
 **Question 2.5** indiquer quelle est l'option (activée par défaut) qui redirige `/` vers `/index.html` ?
 
+l'option qui redirige automatiquement la route racine ("/") vers "/index.html" lorsqu'un client accède à la racine est express.static() avec la configuration par défaut.
+Lorsque qu’on utilise express.static() sans spécifier de fichier d'index personnalisé, Express.js recherche automatiquement les fichiers index suivants dans l'ordre et renvoie le premier qu'il trouve :
+•	"index.html"
+•	"index.htm"
+<br><br><br>
+
 **Question 2.6** visiter la page d'accueil puis rafraichir (Ctrl+R) et _ensuite_ **forcer** le rafraichissement (Ctrl+Shift+R). Quels sont les codes HTTP sur le fichier `style.css` ? Justifier.
+
+Lorsqu’on fait Ctrl+R :
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/2.6%201.png?raw=true)
+
+Lorsqu’on fait Ctrl+Shift+R :
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/2.6%202.png?raw=true)
+
+Lorsqu’on rafraîchit la page (Ctrl+R) après la première visite, le navigateur vérifie s'il a déjà mis en cache le fichier "style.css". S'il l'a en cache, il peut envoyer une demande avec le code HTTP 304 Not Modified. Cela signifie que le navigateur a déjà une copie en cache valide du fichier "style.css" et qu'il peut l'utiliser à partir du cache sans télécharger à nouveau le fichier depuis le serveur. Le serveur renvoie alors le code 304 sans renvoyer le fichier lui-même, car le navigateur l'a déjà.
+Lorsqu’on rafraîchit de force la page (Ctrl+Shift+R), le navigateur ignore la mise en cache et envoie une nouvelle demande pour le fichier "style.css" au serveur. Le serveur renverra à nouveau le fichier avec le code HTTP 200 OK, car il s'agit d'une nouvelle demande et le navigateur ne l'a plus en cache.
+<br><br><br>
 
 Ajouter la ligne `if (app.get("env") === "development") app.use(morgan("dev"));` au bon endroit dans `server-express.mjs` pour activer le middleware Morgan.
 
@@ -469,6 +540,15 @@ Ensuite, créer, sur le modèle de `random.ejs`, une vue `error.ejs` dont le cor
 
 **Question 2.7** vérifier que l'affichage change bien entre le mode _production_ et le mode _development_.
 
+En mode *production*, nous avons ceci qui s’affiche pour l’utilisateur :
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/2.7.1.png?raw=true)
+
+Tandis qu’en mode *development*, nous avons cet affichage pour l’utilisateur :
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/2.7.2.png?raw=true)
+<br><br><br>
+
 **Commit/push** dans votre dépot Git.
 
 Enfin, chargez le module `loglevel` avec `import logger from "loglevel";` puis fixer un niveau de verbosité avec `logger.setLevel(logger.levels.DEBUG);`.
@@ -476,6 +556,11 @@ Enfin, chargez le module `loglevel` avec `import logger from "loglevel";` puis f
 Remplacez tous les `console.log()` et variantes par `logger.error()`, `logger.warn()`, `logger.info()`, `logger.debug()` ou `logger.trace()` approprié.
 
 Modifier le niveau de verbosité, par exemple `logger.setLevel(logger.levels.WARN);` et vérifier l'affichage.
+
+Voici l’affichage final de la gestion d’erreurs :
+
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/2.7.3.png?raw=true)
+<br><br><br>
 
 **Commit/push** dans votre dépot Git.
 
