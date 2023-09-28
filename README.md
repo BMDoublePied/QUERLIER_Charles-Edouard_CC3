@@ -415,7 +415,7 @@ console.info(`File ${import.meta.url} executed.`);
 
 **Question 2.4** quand l'événement `listening` est-il déclenché ?
 
-L'événement "listening" est déclenché lorsque le serveur Express est entièrement opérationnel et prêt à gérer les requêtes HTTP entrantes.
+L'événement "listening" est déclenché lorsque le serveur Express a été lié à un port et à une adresse IP spécifiques et qu'il est prêt à écouter les connexions entrantes. Cela signifie que le serveur est opérationnel et attend des requêtes de clients.
 <br><br><br>
 
 **Commit/push** dans votre dépot Git.
