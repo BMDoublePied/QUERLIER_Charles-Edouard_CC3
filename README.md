@@ -70,6 +70,15 @@ Enfin, exécuter la commande `node server-http.mjs` et vérifier que votre appli
 **Question 1.1** donner la liste des en-têtes de la réponse HTTP du serveur.
 
 ![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.1%201.png?raw=true)
+![img](https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.1%202.png?raw=true)
+
+La première ligne représente la ligne de statut HTTP indiquant que la réponse est OK avec un code d'état 200.
+La deuxième ligne indique la date et l'heure de génération de la réponse
+La troisième ligne spécifie que la connexion entre le client et le serveur doit être maintenue ouverte pour d'autres requêtes.
+La quatrième ligne définit un délai de 5 secondes pour la durée pendant laquelle la connexion doit rester ouverte s'il n'y a pas d'autres requêtes.
+La dernière ligne indique que la réponse est encodée sur plusieurs parties.
+
+
 ### Servir différents types de contenus
 
 Maintenant, remplacer la fonction `requestListener()` par la suivante et tester :
@@ -82,6 +91,13 @@ function requestListener(_request, response) {
 ```
 
 **Question 1.2** donner la liste des en-têtes qui ont changé depuis la version précédente.
+
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.2%201.png?raw=true)
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.2%202.png?raw=true)
+
+La ligne « Transfer-Encoding » est enlevée, et il y a deux nouvelles lignes :
+« Content-Type: application/json » qui spécifie le type de contenu de la réponse, qui est JSON dans ce cas, et « Content-Length: 20 »  qui indique la longueur du corps de la réponse en octets. Dans ce cas, le corps de la réponse a une longueur de 20 octets.
+
 
 Remplacer enfin la fonction `requestListener()` par la suivante et tester :
 
@@ -101,7 +117,29 @@ function requestListener(_request, response) {
 
 **Question 1.3** que contient la réponse reçue par le client ?
 
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.3.png?raw=true)
+
+Si le fichier html est bien renseigné avec le nom correspondant (Dans ce cas, index.html), le contenu html va bien charger. Si ce n’est pas le cas, la requête n’aboutira pas.
+
+
 **Question 1.4** quelle est l'erreur affichée dans la console ? Retrouver sur <https://nodejs.org/api> le code d'erreur affiché.
+
+
+[Error: ENOENT: no such file or directory, open 'D:\Travail\cours\L2 S4\Développement web\TP\TP5\base\index.html'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'D:\\Travail\\cours\\L2 S4\\Développement web\\TP\\TP5\\base\\index.html'
+}
+
+•	ENOENT (No such file or directory): Commonly raised by fs operations to indicate that a component
+ 	of the specified pathname does not exist. No entity (file or directory) could be found by the given path.
+
+Il ne trouve pas le fichier spécifié dans « readFile » dans la fonction requestListener()
+
+En ajoutant la gestion d’erreur en utilisant un « catch(error) » dans la fonction requestListener() lorsque cela se produit, nous pouvons avoir le message suivant s’affichant sur la page pour l’utilisateur :
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.4.png?raw=true)
+
 
 Modifier la fonction `requestListener()` précédente pour que le client recoive une erreur 500 si `index.html` est introuvable en remplacant le callback de la méthode `Promise.catch()`.
 
@@ -110,6 +148,22 @@ Maintenant, renommer le fichier `__index.html` en `index.html` et tester à nouv
 Enfin, reprenez `requestListener()` dans le style `async/await`.
 
 **Question 1.5** donner le code de `requestListener()` modifié _avec gestion d'erreur_ en `async/await`.
+
+async function requestListener(_request, response) {
+  try {
+    const contents = await fs.readFile("index.html", "utf8");
+    response.setHeader("Content-Type", "text/html");
+    response.writeHead(200);
+    response.end(contents);
+  } catch (error) {
+    console.error(error);
+    response.writeHead(500);
+    response.end("Erreur interne du serveur (code d'erreur : 500) : fichier introuvable");
+  }
+}
+
+Cette version permet d’avoir un code plus lisible, de mieux gérer les erreurs avec try/catch et nous permettra d’utiliser d’autres opérations asynchrones plus facilement.
+
 
 **Commit/push** dans votre dépot Git.
 
@@ -121,6 +175,21 @@ Dans le dossier `devweb-tp5` exécuter les commandes suivantes :
 - `npm install nodemon --save-dev`
 
 **Question 1.6** indiquer ce que cette commande a modifié dans votre projet.
+
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%201.png?raw=true)
+Ces commandes permettent d’installer différents packages.
+Cross-env permet de définir et d'utiliser des variables d'environnement de manière indépendante de Windows.
+Nodemon quant à lui permet de redémarrer le serveur lorsque des changements sont détectés en scannant les fichiers, ce qui fluidifie grandement le développement.
+Le fichier package.json a été modifié en ajoutant cross-env en tant que dépendance de production, et en ajoutant Nodemon en tant que dépendance de développement.
+
+package.json avant l’installation de ces packages :
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%202.png?raw=true)
+
+package.json après installation de ces packages :
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%203.png?raw=true)
+
+De nombreux fichiers ont également été ajoutés correspondant aux éléments nécessaires au bon fonctionnement de ces packages :
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.6%204.png?raw=true)
 
 Ensuite, remplacer la propriété `"scripts"` du fichier `package.json` par la suivante :
 
@@ -137,6 +206,15 @@ Enregistrer le fichier et vérifier qu'il y a eu rechargement automatique grâce
 Ensuite, faire la même chose avec la commande `npm run http-prod`.
 
 **Question 1.7** quelles sont les différences entre les scripts `http-dev` et `http-prod` ?
+
+http-dev :
+Utilise nodemon : Le script http-dev utilise nodemon pour surveiller le fichier server-http.mjs. Cela signifie que lorsqu’on exécute ce script avec npm run http-dev, nodemon surveillera les modifications du fichier server-http.mjs et redémarrera automatiquement le serveur lorsque des changements sont détectés.
+Définit NODE_ENV comme "development" : Le script définit la variable d'environnement NODE_ENV sur "development". Cela peut être utile pour configurer le comportement spécifique au développement.
+
+http-prod :
+Utilise node : Le script http-prod utilise simplement node pour exécuter le fichier server-http.mjs. Contrairement à nodemon, il n'y a pas de surveillance de fichiers ni de redémarrage automatique en cas de modification du code source.
+Définit NODE_ENV comme "production" : Le script définit la variable d'environnement NODE_ENV sur "production". Cela peut être utilisé pour configurer l’application de manière spécifique à la production, par exemple, pour désactiver le mode de débogage ou pour activer certaines optimisations.
+
 
 Les fichiers [`.eslintrc.json`](.eslintrc.json) et [`.prettierrc`](.prettierrc) sont fournis dans le dossier `devweb-tp5`. Exécuter la commande suivante pour installe les dépendances :
 
@@ -187,6 +265,36 @@ Tester les **routes** suivantes :
 - `http://localhost:8000/dont-exist`
 
 **Question 1.8** donner les codes HTTP reçus par votre navigateur pour chacune des quatre pages précédentes.
+
+•	http://localhost:8000/index.html
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%201.png?raw=true)
+Affiche le contenu du fichier index.html lorsqu’on ajoute « index.html » dans l’url.
+case "/index.html":
+        response.writeHead(200);
+        return response.end(contents);
+
+•	http://localhost:8000/random.html
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%202.png?raw=true)
+Affiche un nombre aléatoire selon le contenu indiqué dans requestListener lorsqu’on ajoute « random.html » dans l’url.
+case "/random.html":
+        response.writeHead(200);
+        return response.end(`<html><p>${Math.floor(100 * Math.random())}</p></html>`);
+
+•	http://localhost:8000/
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%203.png?raw=true)
+Lorsque rien n’est renseigné dans l’url, il affiche un code d’erreur 404, il ne trouve rien, comme indiqué dans requestListener :
+default:
+        response.writeHead(404);
+        return response.end(`<html><p>404: NOT FOUND</p></html>`);
+
+•	http://localhost:8000/dont-exist
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%204.png?raw=true)
+Lorsque le contenu renseigné est introuvable, il renvoie une erreur 404. L’erreur est affiché pour l’utilisateur.
+![img] (https://github.com/BMDoublePied/QUERLIER_Charles-Edouard_CC3/blob/main/img/1.8%205.png?raw=true)
+
+
+
+__________________________
 
 Maintenant, on veut ajouter une route `/random/:nb` où `:nb` est un paramètre entier avec le nombre d'entiers à générer. Ajouter cette route au `switch` et reprendre la page `random.html` pour générer autant de nombres qu'indiqué dans l'URL.
 
